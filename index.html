@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Song Dedicated to Her <3 </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(to right, #ff66b2, #ff3333); /* Love-themed gradient */
+    }
+
+    /* Floating hearts animation */
+    @keyframes floatHearts {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(0.3);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-700px) scale(1);
+      }
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 50px;
+      color: #ff3366;
+      animation: floatHearts 4s ease-in-out forwards;
+      pointer-events: none;
+      animation-delay: calc(0.5s * var(--i)); /* Stagger hearts animations */
+      z-index: 400;
+      bottom: -10%; /* Start at the bottom */
+    }
+
+    /* Crystal effect for hearts */
+    .heart::before {
+      content: '❤️';
+      font-size: inherit;
+      background: linear-gradient(45deg, #ffffff, #ffccff);
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: sparkle 1s infinite alternate;
+    }
+
+    @keyframes sparkle {
+      0% {
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.5);
+      }
+      100% {
+        text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    .text-container {
+      text-align: center;
+      opacity: 0;
+      transform: scale(0.1);
+      animation: fadeInFromMiddle 5s ease-out forwards;
+      margin-bottom: 20px;
+    }
+
+    .text-container h1 {
+      font-size: 2rem;
+      color: white;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: red;
+      color: white;
+      font-size: 1.2rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: darkred;
+    }
+
+    @keyframes fadeInFromMiddle {
+      0% {
+        opacity: 0;
+        transform: scale(0.1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    #video-container {
+      display: none;
+      width: 100%;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    #video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Prevent text and button from being seen after disappearing */
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Floating Hearts -->
+  <script>
+    function createFloatingHearts() {
+      const heartCount = 10; // Number of hearts
+      const heartContainer = document.body;
+
+      for (let i = 0; i < heartCount; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = `${Math.random() * 100}%`; // Random horizontal position
+        heart.style.animationDuration = `${Math.random() * 2 + 3}s`; // Random float speed
+        heart.style.animationDelay = `${Math.random() * 2}s`; // Random delay before appearing
+
+        // Set each heart's animation delay
+        heart.style.setProperty('--i', i);
+
+        heartContainer.appendChild(heart);
+
+        // Remove hearts after they disappear (after the animation completes)
+        setTimeout(() => {
+          heart.remove();
+        }, parseFloat(heart.style.animationDuration) * 1000);
+      }
+    }
+
+    // Call function to create hearts after a delay
+    setInterval(createFloatingHearts, 300); // Create hearts every 3 seconds
+  </script>
+
+  <!-- Text and Button -->
+  <div class="text-container">
+    <h1>A song dedicated to her<3🫠 </h1>
+    <button class="btn" onclick="showVideo()"> click here🫶 </button>
+  </div>
+  
+  <!-- Video container -->
+  <div id="video-container">
+    <video controls>
+      <source src="your-video.mp4" type="video/mp4">
+      <source src="your-video.webm" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <script>
+    function showVideo() {
+      const textContainer = document.querySelector('.text-container');
+      const videoContainer = document.getElementById('video-container');
+
+      // Fade out the text and button by adding a class that hides them
+      textContainer.style.transition = "opacity 1s ease-out, transform 1s ease-out";
+      textContainer.style.opacity = "0";
+      textContainer.style.transform = "translateY(30px)";
+      
+      // Add 'hidden' class after fade-out completes (1 second delay)
+      setTimeout(() => {
+        textContainer.classList.add('hidden');
+        videoContainer.style.display = 'block';
+      }, 1000); // Wait 1 second for the fade-out to complete
+    }
+  </script>
+
+</body>
+</html>
